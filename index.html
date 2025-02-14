@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>李志超的个人主页</title>
+  <style>
+    body {
+      display: flex;
+      flex-direction: column;
+      justify-content: flex-start;
+      align-items: center;
+      min-height: 100vh;
+      margin: 0;
+      font-family: Arial, sans-serif;
+    }
+
+    .profile-container {
+      width: 80%;
+      max-width: 800px;
+      margin: 20px auto;
+      padding: 20px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      background-color: #f4f4f4;
+      transition: transform 0.8s ease, opacity 0.8s ease;
+    }
+
+    .image-gallery {
+      width: 200px;
+      height: 200px;
+      margin: 20px auto;
+      padding: 10px;
+      border-radius: 10px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      display: grid;
+      grid-template-columns: repeat(2, 1fr);
+      gap: 5px;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .image-gallery img {
+      width: 90%;
+      height: 90%;
+      object-fit: cover;
+      border-radius: 5px;
+      box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+      transition: transform 0.3s ease, box-shadow 0.3s ease, filter 0.3s ease;
+    }
+
+    .image-gallery img:hover {
+      transform: rotate(6deg) scale(1.1);
+      box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+      filter: brightness(1.2) contrast(1.2);
+      cursor: pointer;
+    }
+
+    #page2 {
+      position: absolute;
+      top: 0;
+      left: 0;
+      width: 100%;
+      height: 100%;
+      opacity: 0;
+      transition: opacity 0.8s ease;
+      z-index: -1;
+    }
+
+    #flip-button {
+      margin-top: 20px;
+      padding: 10px 20px;
+      background-color: #007acc;
+      color: white;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, "Open Sans", "Helvetica Neue", sans-serif;
+    }
+
+    #flip-button:hover {
+      background-color: #005bb5;
+    }
+  </style>
+</head>
+<body>
+  <section id="page1" class="profile-container">
+    <main>
+      <h1>李志超</h1>
+      <p>兰州大学口腔医学生</p>
+    </main>
+    <aside>
+      <h2>性别: 男</h2>
+      <p>正在学习编程 我爱你智琳琳</p>
+    </aside>
+    <div style="position: relative; right: 20px; top: 20px;">
+      <button id="flip-button" onclick="flipPage()" style="margin-bottom: 10px;">翻页</button>
+      <button id="language-toggle" onclick="toggleLanguage()" style="margin-bottom: 10px;">中文</button>
+      <button class="time-button" onclick="showCurrentTime()">显示时间</button>
+    </div>
+  </section>
+  <div id="page2" class="image-gallery">
+    <img src="zll1.jpg" alt="Image 1">
+    <img src="zll2.jpg" alt="Image 2">
+    <img src="zll3.jpg" alt="Image 3">
+    <img src="zll4.jpg" alt="Image 4" onclick="showValentineMessage()">
+  </div>
+
+  <script>
+    function toggleLanguage() {
+      const isChinese = document.getElementById('language-toggle').innerText === '中文';
+      document.getElementById('language-toggle').innerText = isChinese ? 'English' : '中文';
+
+      document.querySelector('.profile-container h1').innerText = isChinese ? '李志超' : 'Zhi Chao Li';
+      document.querySelector('.profile-container p').innerText = isChinese ? '兰州大学口腔医学生' : 'Dental Medicine Student at Lanzhou University';
+      document.querySelector('.profile-container h2').innerText = isChinese ? '性别: 男' : 'Gender: Male';
+      document.querySelector('.profile-container aside h2').innerText = isChinese ? '正在学习编程' : 'Trying to learn coding';
+    }
+
+    function flipPage() {
+      const page1 = document.getElementById('page1');
+      const page2 = document.getElementById('page2');
+
+      if (page1.style.transform === 'translateY(-100%)') {
+        page1.style.transform = 'translateY(0)';
+        page1.style.opacity = '1';
+        page2.style.opacity = '0';
+      } else {
+        page1.style.transform = 'translateY(-100%)';
+        page1.style.opacity = '0';
+        page2.style.opacity = '1';
+      }
+    }
+
+    function showCurrentTime() {
+      const currentTime = new Date().toLocaleTimeString();
+      alert(currentTime);
+    }
+
+    function showValentineMessage() {
+      alert('情人节快乐');
+    }
+
+    document.addEventListener('wheel', function(event) {
+      const page1 = document.getElementById('page1');
+      const page2 = document.getElementById('page2');
+
+      if (event.deltaY < 0 && page1.style.transform === 'translateY(-100%)') {
+        page1.style.transform = 'translateY(0)';
+        page1.style.opacity = '1';
+        page2.style.opacity = '0';
+      }
+    });
+  </script>
+</body>
+</html>
